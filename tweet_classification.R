@@ -9,17 +9,18 @@ library(slam)
 library(sentiment)
 
 #Load comments/text
-Tweet = read.csv("TweetsDataSet.csv", header = T)
+tweet_data = read.csv("TweetsDataSet.csv", header = T)
+str(tweet_data)
 
 #Load defined stop words
 #stop_words = read.csv("stopwords.csv", header = T)
 #names(stop_words) = "StopWords"
 
 #Delete the leading spaces
-Tweet$tweet = str_trim(Tweet$tweet)
+tweet_data$tweet = str_trim(tweet_data$tweet)
 
 #Select only text column
-Tweet = data.frame(Tweet[,2])
+Tweet = data.frame(tweet_data[,2])
 names(Tweet) = "comments"
 Tweet$comments = as.character(Tweet$comments)
 
@@ -58,7 +59,8 @@ TweetCorpus_WC = tm_map(TweetCorpus, removeWords, c('i','its','it','us','use','u
 #TweetCorpus_WC = tm_map(TweetCorpus_WC, removeWords, stop_words$StopWords)
 
 #Word cloud
-wordcloud(TweetCorpus_WC, max.words = 100, scale=c(3, .1), colors=brewer.pal(6, "Dark2"))
+wordcloud(TweetCorpus_WC, max.words = 100, scale=c(3, .1), 
+          random.order = F, colors=brewer.pal(6, "Dark2"))
 
 #Another method to build wordcloud
 pal2 = brewer.pal(8,"Dark2")
